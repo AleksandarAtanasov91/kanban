@@ -26,7 +26,7 @@ export default class Note extends React.Component {
     //would allow us to use the underlying DOM API through
     //this.refs.input. This can be useful when combined with
     //React lifecycle hooks.
-    return <input type="text"
+    return <input className="input-field" type="text"
       ref={
         (e) => e ? e.selectionStart = this.props.task.length : null
       }
@@ -41,13 +41,13 @@ export default class Note extends React.Component {
 
     return (
       <div onClick={this.edit}>
-        <span>{this.props.task}</span>
+        <span className="task">{this.props.task}</span>
         {onDelete ? this.renderDelete() : null}
       </div>
     );
   };
   renderDelete = () => {
-    return <button onClick={this.props.onDelete}>x</button>;
+    return <button className="delete-note" onClick={this.props.onDelete}>x</button>;
   };
   edit = () => {
     //Enter edit mode
