@@ -28,10 +28,17 @@ export default class App extends React.Component {
     return (
       <div>
         <button onClick={this.addNote}>+</button>
-        <Notes notes={notes} />
+        <Notes notes={notes} onEdit={this.editNote} onDelete={this.deleteNote} />
       </div>
     );
   }
+  deleteNote = (id, e) => {
+    e.stopPropagation();
+
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== id)
+    });
+  };
   //We are using an experimental feature known as property
   //initializer here. It allows us to bind the method 'this'
   //to point at our *App* instance
@@ -59,5 +66,22 @@ export default class App extends React.Component {
         task: 'New task'
       }])
     });
+  };
+  editNote = (id, task) => {
+    //Don't modify if trying set an empty value
+    //(trim() removes empty spaces around string)
+    if(!task.trim()) {
+      return;
+    }
+
+    const notes = this.state.notes.map(note => {
+      if(note.id === id && task) {
+        note.task = task;
+      }
+
+      return note;
+    });
+
+    this.setState({notes});
   };
 }
